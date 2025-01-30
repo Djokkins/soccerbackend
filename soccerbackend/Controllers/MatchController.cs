@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using soccerbackend.Data;
+using soccerbackend.Models;
 
 namespace soccerbackend.Controllers
 {
@@ -7,9 +9,9 @@ namespace soccerbackend.Controllers
     [ApiController]
     public class MatchesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SoccerDbContext _context;
 
-        public MatchesController(ApplicationDbContext context)
+        public MatchesController(SoccerDbContext context)
         {
             _context = context;
         }
@@ -31,6 +33,14 @@ namespace soccerbackend.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(PostMatch), new { id = match.Id }, match);
+        }
+        [HttpPut]
+        public async Task<ActionResult<Match>> PutMatch(int matchid, int winnerid)
+        {
+            var match = _context.Matches.Where(m => m.Id == matchid).SingleAsync();
+            //match.WinnerId = winnerid;
+            await _context.SaveChangesAsync();
+            return CreatedAtAction(nameof(PutMatch), new { id = match.Id }, match);
         }
     }
 }

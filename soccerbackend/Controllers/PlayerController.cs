@@ -9,9 +9,9 @@ namespace soccerbackend.Controllers
     [ApiController]
     public class PlayersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SoccerDbContext _context;
 
-        public PlayersController(ApplicationDbContext context)
+        public PlayersController(SoccerDbContext context)
         {
             _context = context;
         }
@@ -26,6 +26,20 @@ namespace soccerbackend.Controllers
         public async Task<ActionResult<Player>> GetPlayer(int id)
         {
             var player = await _context.Players.FindAsync(id);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            return player;
+        }
+
+
+        [HttpGet("{player}")]
+        public async Task<ActionResult<Player>> GetPlayer(string name, string initials)
+        {
+            var player = await _context.Players.Select(p => p).Where(p => p.Name == name && p.Initials == initials).FirstOrDefaultAsync();
 
             if (player == null)
             {

@@ -1,5 +1,6 @@
 
 
+using Azure.Identity;
 using Microsoft.EntityFrameworkCore;
 using soccerbackend.Data;
 
@@ -7,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<SoccerDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SoccerDBConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using soccerbackend.Data;
 using soccerbackend.Models;
 
@@ -8,9 +9,9 @@ namespace soccerbackend.Controllers
     [ApiController]
     public class TeamsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly SoccerDbContext _context;
 
-        public TeamsController(ApplicationDbContext context)
+        public TeamsController(SoccerDbContext context)
         {
             _context = context;
         }
