@@ -21,11 +21,11 @@ namespace soccerbackend.Controllers
         {
             _context.Matches.Add(match);
 
-            foreach (var player in match.Winner.Players)
+            foreach (var player in match.WinnerTeam.Players)
             {
                 player.Handicap += 1;
             }
-            foreach (var player in match.Loser.Players)
+            foreach (var player in match.LoserTeam.Players)
             {
                 player.Handicap -= 1;
             }

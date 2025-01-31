@@ -36,22 +36,33 @@ namespace soccerbackend.Controllers
         }
 
 
-        [HttpGet("{player}")]
-        public async Task<ActionResult<Player>> GetPlayer(string name, string initials)
+        [HttpGet("(Findplayer)")]
+        public async Task<ActionResult<List<Player>>> GetPlayerByNameOrInitials(
+            [FromQuery] string? name,
+            [FromQuery] string? initials)
         {
-            var player = await _context.Players.Select(p => p).Where(p => p.Name == name && p.Initials == initials).FirstOrDefaultAsync();
+            if(name == null && initials == null)
+            {
+                return BadRequest("name or initials must be provided");
+            }
 
-            if (player == null)
+            List<Player> players = await _context.Players.Select(p => p).Where(p => p.Name == name || p.Initials == initials).ToListAsync();
+
+            if (players == null)
             {
                 return NotFound();
             }
 
-            return player;
+            return players;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Player>> PostPlayer(Player player)
+        public async Task<ActionResult<Player>> PostPlayer(
+            [FromQuery] string name,
+            [FromQuery] string initials,
+            [FromQuery] int handicap)
         {
+            Player player = new Player(name, initials, handicap);
             _context.Players.Add(player);
             await _context.SaveChangesAsync();
 

@@ -30,13 +30,13 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Match>()
-                .HasOne(m => m.Winner)
+                .HasOne(m => m.WinnerTeam)
                 .WithMany()
                 .HasForeignKey(m => m.WinnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Match>()
-                .HasOne(m => m.Loser)
+                .HasOne(m => m.LoserTeam)
                 .WithMany()
                 .HasForeignKey(m => m.LoserId)
                 .OnDelete(DeleteBehavior.Restrict);

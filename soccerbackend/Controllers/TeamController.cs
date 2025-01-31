@@ -23,8 +23,11 @@ namespace soccerbackend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Team>> PostTeam(Team team)
+        public async Task<ActionResult<Team>> PostTeam(
+            [FromQuery] string name,
+            [FromQuery] List<Player> players)
         {
+            Team team = new Team(name, players);
             _context.Teams.Add(team);
             await _context.SaveChangesAsync();
 
