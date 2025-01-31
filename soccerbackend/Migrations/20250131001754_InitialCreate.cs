@@ -31,8 +31,8 @@ namespace soccerbackend.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Team1Id = table.Column<int>(type: "int", nullable: false),
                     Team2Id = table.Column<int>(type: "int", nullable: false),
-                    WinnerId = table.Column<int>(type: "int", nullable: false),
-                    LoserId = table.Column<int>(type: "int", nullable: false)
+                    WinnerId = table.Column<int>(type: "int", nullable: true),
+                    LoserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,25 +42,25 @@ namespace soccerbackend.Migrations
                         column: x => x.LoserId,
                         principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Matches_Teams_Team1Id",
                         column: x => x.Team1Id,
                         principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Matches_Teams_Team2Id",
                         column: x => x.Team2Id,
                         principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Matches_Teams_WinnerId",
                         column: x => x.WinnerId,
                         principalTable: "Teams",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

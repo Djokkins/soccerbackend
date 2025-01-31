@@ -10,7 +10,7 @@ using soccerbackend.Data;
 namespace soccerbackend.Migrations
 {
     [DbContext(typeof(SoccerDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class SoccerDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,7 @@ namespace soccerbackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("LoserId")
+                    b.Property<int?>("LoserId")
                         .HasColumnType("int");
 
                     b.Property<int>("Team1Id")
@@ -38,7 +38,7 @@ namespace soccerbackend.Migrations
                     b.Property<int>("Team2Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("WinnerId")
+                    b.Property<int?>("WinnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -105,26 +105,24 @@ namespace soccerbackend.Migrations
                     b.HasOne("soccerbackend.Models.Team", "Loser")
                         .WithMany()
                         .HasForeignKey("LoserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("soccerbackend.Models.Team", "Team1")
                         .WithMany()
                         .HasForeignKey("Team1Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("soccerbackend.Models.Team", "Team2")
                         .WithMany()
                         .HasForeignKey("Team2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("soccerbackend.Models.Team", "Winner")
                         .WithMany()
                         .HasForeignKey("WinnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Loser");
 
