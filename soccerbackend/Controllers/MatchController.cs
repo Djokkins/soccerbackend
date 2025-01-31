@@ -19,6 +19,9 @@ namespace soccerbackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Match>> PostMatch(Match match)
         {
+            if (match.isPlayerOnBothTeams(match.Team1, match.Team2)) {
+                return BadRequest("Player cannot be on both teams");
+            }
             _context.Matches.Add(match);
 
             foreach (var player in match.WinnerTeam.Players)
